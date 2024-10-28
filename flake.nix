@@ -6,6 +6,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://letthemplaycache.cachix.org"
+    ];
+
+    extra-trusted-public-keys = [
+      "letthemplaycache.cachix.org-1:Vk354ZqC4+Wwq0+yp1xWm9jlaAmjcXNkhvIKYbO5ptM="
+    ];
+  };
+
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
