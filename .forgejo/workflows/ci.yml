@@ -22,9 +22,6 @@ jobs:
           extra-conf: |
             substituters = https://attic.letthemplay.tech/system?priority=10 https://cache.nixos.org
             trusted-public-keys = system:UnbWk4457H/fxEuJjW8HnzHdv+CUVE6LMbSd6S4x7Ho= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-      - name: Install attic
-        run: |
-          nix profile install github:zhaofengli/attic
       - name: Push to Cachix
         uses: cachix/cachix-action@v14
         with:
