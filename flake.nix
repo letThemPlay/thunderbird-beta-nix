@@ -18,14 +18,13 @@
       perSystem =
         { pkgs, ... }:
         {
-          packages.default = pkgs.thunderbird-bin.overrideAttrs (_: rec {
+          packages.default = pkgs.wrapFirefox (pkgs.thunderbird-unwrapped.overrideAttrs rec {
             version = "132.0b6";
-            src =
-              pkgs.fetchurl {
-                url = "https://download-installer.cdn.mozilla.net/pub/thunderbird/releases/${version}/linux-x86_64/en-US/thunderbird-${version}.tar.bz2";
-                sha256 = "sha256-So0FdYfrd+PzTsW4mQbxyeS5osvKfPUHW4azffvpGKk=";
-              };
-          });
+            src = pkgs.fetchurl {
+              url = "mirror://mozilla/thunderbird/releases/${version}/source/thunderbird-${version}.source.tar.xz";
+              sha256 = "sha256-wRWLOIwnLesfnonav3oGRWiWwCvnfWeu5uC52jtAZkE=";
+            };
+          }) { libName = "thunderbird"; };
         };
     };
 }
