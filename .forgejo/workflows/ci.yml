@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  RUNNER_ARCH: X64
+  RUNNER_OS: Linux
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+        with:
+          source-tag: v0.19.0
+          extra-conf: |
+            substituters = https://attic.letthemplay.tech/system?priority=10 https://cache.nixos.org
+            trusted-public-keys = system:UnbWk4457H/fxEuJjW8HnzHdv+CUVE6LMbSd6S4x7Ho= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+      - name: Install attic;
+        run: |
+          nix profile install github:zhaofengli/attic
+      - name: Build
+        run: |
+          nix build .#default
+      - name: Login to binary cache
+        run: |
+          attic login apollo https://attic.letthemplay.tech ${{ secrets.ATTIC_TOKEN }}
+      - name: Push to binary cache
+        uses: https://github.com/nick-fields/retry@v3
+        with:
+          max_attempts: 3
+          timeout_minutes: 30
+          command: attic push system result -j 3
+
