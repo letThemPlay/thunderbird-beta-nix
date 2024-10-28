@@ -9,6 +9,7 @@ on:
 env:
   RUNNER_ARCH: X64
   RUNNER_OS: Linux
+  USER: root
   
 jobs:
   build:
