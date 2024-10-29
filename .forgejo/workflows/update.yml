@@ -33,7 +33,7 @@ jobs:
           nix run .#update
       - name: Git Commit
         id: git_commit
-        uses: zwaldowski/git-commit-action@v14
+        uses: zwaldowski/git-commit-action@v1
         with:
           commit_message: "Update Beta Sources"
       - name: Create PR
