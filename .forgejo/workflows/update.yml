@@ -1,4 +1,4 @@
-name: ci
+name: update-sources
 
 on:
   workflow_dispatch:
@@ -35,6 +35,6 @@ jobs:
           create_branch: true
       - name: Create PR
         run: |
-          git push origin HEAD:refs/for/main/ -o topic="update-beta-sources" \
+          git push origin HEAD:refs/for/main -o topic="update-beta-sources" \
           -o title="Update Beta Souces"
 
