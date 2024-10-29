@@ -29,12 +29,13 @@ jobs:
       - name: Update Sources
         run: |
           nix run .#update
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: update-sources
-          create_branch: true
+      #- uses: stefanzweifel/git-auto-commit-action@v5
+        #  with:
+        #  branch: update-sources
+        #  create_branch: true
       - name: Create PR
         run: |
+          git commit -am "Updated Beta Sources"
           git push origin HEAD:refs/for/main -o topic="update-beta-sources" \
           -o title="Update Beta Souces"
 
