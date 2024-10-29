@@ -6,7 +6,7 @@ sources=()
 
 for locale in ${locales[@]}; do
   url=https://releases.mozilla.org/pub/thunderbird/releases/$version/linux-x86_64/$locale/thunderbird-$version.tar.bz2
-  hash=$(nix-prefetch-url --unpack $url)
+  hash=$(nix-prefetch-url $url)
   sources+=( $(jo url=$url arch="linux-x86_64" locale=$locale sha256=$hash))
 done
 final=$(jo -p version=$version sources=$(jo -a ${sources[@]}))
