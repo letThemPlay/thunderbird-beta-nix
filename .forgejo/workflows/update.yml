@@ -31,9 +31,15 @@ jobs:
       - name: Update Sources
         run: |
           nix run .#update
+      - name: Git Commit
+        id: git_commit
+        uses: zwaldowski/git-commit-action@v14
+        with:
+          commit_message: "Update Beta Sources"
       - name: Create PR
+        if: ${{ steps.git_commit.outputs.sha != ''}}
         run: |
           git add beta-sources.json
           git commit -m "Updated Beta Sources"
-          git push origin HEAD:refs/for/main -o topic="update-beta-sources" -o title="Update Beta Souces"
+          git push origin HEAD:refs/for/main -o topic="update-beta-sources" -o title="Update Beta Sources"
 
