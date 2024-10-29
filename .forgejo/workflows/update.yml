@@ -35,7 +35,8 @@ jobs:
         #  create_branch: true
       - name: Create PR
         run: |
-          git commit -am "Updated Beta Sources"
+          git add beta-sources.json
+          git commit -m "Updated Beta Sources"
           git push origin HEAD:refs/for/main -o topic="update-beta-sources" \
           -o title="Update Beta Souces"
 
