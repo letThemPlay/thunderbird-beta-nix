@@ -33,4 +33,8 @@ jobs:
         with:
           branch: update-sources
           create_branch: true
+      - name: Create PR
+        run: |
+          git push origin HEAD:refs/for/main/ -o topic="update-beta-sources" \
+          -o title="Update Beta Souces"
 
