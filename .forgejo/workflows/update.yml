@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ SECRETS.GIT_TOKEN }}
       - name: Configure Git
         run: |
           git config user.name "Forgejo Actions Bot"
@@ -38,6 +40,5 @@ jobs:
           git switch -c beta-sources
           git add beta-sources.json
           git commit -m "Updated Beta Sources"
-          git push origin HEAD:refs/for/main -o topic="update-beta-sources" \
-          -o title="Update Beta Souces"
+          git push origin HEAD:refs/for/main -o topic="update-beta-sources" -o title="Update Beta Souces"
 
