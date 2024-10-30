@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Set PR to autocomplete
         run: |
+          echo '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge'
           curl -X 'POST' \
             '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge' \
             -H 'accept: application/json' \
