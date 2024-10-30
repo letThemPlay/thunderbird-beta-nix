@@ -37,7 +37,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Updated Beta Sources";
             git push origin HEAD:refs/for/main -o topic="update-beta-sources" -o title="Update Beta Sources";
-            curl --header "ContentType: application/json" --header "AuthorizationHeaderToken: token ${{ secrets.GIT_TOKEN }}" --request POST --data '{ "Do": "merge","merge_when_checks_succeed": true }' ${{ env.GITHUB_API_URL }}/repos/kdmorris//pulls/${{ github.event.number }}/merge;
+            curl --header "ContentType: application/json" --header "AuthorizationHeaderToken: token ${{ secrets.GIT_TOKEN }}" --request POST --data '{ "Do": "merge","merge_when_checks_succeed": true }' ${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge;
           else
             echo "No Changes to Beta Sources";
           fi

@@ -1,4 +1,4 @@
-locales=("en-GB" "en-US" "fr")
+locales=("en-GB" "en-US")
 content=$(curl https://product-details.mozilla.org/1.0/thunderbird_versions.json)
 version=$(jq -r '.LATEST_THUNDERBIRD_DEVEL_VERSION' <<< "$content")
 
