@@ -1,9 +1,7 @@
 name: ci
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
   workflow_dispatch:
 
 env:
@@ -20,15 +18,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v14
         with:
           source-tag: v0.19.0
-          extra-conf: |
-            substituters = https://attic.letthemplay.tech/system?priority=10 https://cache.nixos.org
-            trusted-public-keys = system:UnbWk4457H/fxEuJjW8HnzHdv+CUVE6LMbSd6S4x7Ho= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-      - name: Push to Cachix
-        uses: cachix/cachix-action@v14
-        with:
-          name: letthemplaycache
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Build
         run: |
-          nix build --accept-flake-config
+          nix build
 
