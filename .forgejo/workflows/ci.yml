@@ -13,6 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+        with:
+          source-tag: v0.19.0
+      - name: Build
+        run: |
+          nix build
       - name: Set PR to autocomplete
         run: |
           echo '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge'
@@ -22,12 +30,3 @@ jobs:
             -H 'Authorization: token ${{ secrets.API_TOKEN }}' \
             -H 'Content-Type: application/json' \
             -d '{ "Do": "merge", "merge_when_checks_succeed": true }'
-      - uses: actions/checkout@v4
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v14
-        with:
-          source-tag: v0.19.0
-      - name: Build
-        run: |
-          nix build
-
