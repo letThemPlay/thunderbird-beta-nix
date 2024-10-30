@@ -37,10 +37,10 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Updated Beta Sources"
             git push origin HEAD:refs/for/main -o topic="update-beta-sources" -o title="Update Beta Sources"
-            echo '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge'
+            echo '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ env.github.event.number }}/merge'
 
             curl -X 'POST' \
-            '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ github.event.number }}/merge' \
+            '${{ env.GITHUB_API_URL }}/repos/kdmorris/thunderbird/pulls/${{ env.github.event.number }}/merge' \
             -H 'accept: application/json' \
             -H 'Authorization: token ${{ secrets.API_TOKEN }}' \
             -H 'Content-Type: application/json' \
