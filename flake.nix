@@ -16,51 +16,14 @@
         #"x86_64-darwin"
       ];
       perSystem =
-        {
-          pkgs,
-          lib,
-          ...
-        }:
+        { pkgs, ... }:
 
         {
           packages =
             let
-              thunderbird-bin-unwrapped =
-                (pkgs.thunderbird-bin-unwrapped.override {
-                  generated = builtins.fromJSON (builtins.readFile "${self}/beta-sources.json");
-                }).overrideAttrs
-                  (
-                    final: prev:
-                    let
-                      systemLocale = "en_US";
-                      generated = builtins.fromJSON (builtins.readFile "${self}/beta-sources.json");
-                      inherit (generated) sources version;
-
-                      mozillaPlatforms = {
-                        i686-linux = "linux-i686";
-                        x86_64-linux = "linux-x86_64";
-                      };
-
-                      mozLocale =
-                        if systemLocale == "ca_ES@valencia" then
-                          "ca-valencia"
-                        else
-                          lib.replaceStrings [ "_" ] [ "-" ] systemLocale;
-
-                      arch = mozillaPlatforms.${pkgs.stdenv.hostPlatform.system};
-                      isPrefixOf = prefix: string: builtins.substring 0 (builtins.stringLength prefix) string == prefix;
-                      sourceMatches = locale: source: (isPrefixOf source.locale locale) && source.arch == arch;
-                      defaultSource = lib.findFirst (sourceMatches "en-US") { } sources;
-                      source = lib.findFirst (sourceMatches mozLocale) defaultSource sources;
-                    in
-                    {
-                      inherit version;
-
-                      src = pkgs.fetchurl {
-                        inherit (source) url sha256;
-                      };
-                    }
-                  );
+              thunderbird-bin-unwrapped = pkgs.thunderbird-bin-unwrapped.override {
+                generated = builtins.fromJSON (builtins.readFile "${self}/beta-sources.json");
+              };
 
               thunderbird-bin = pkgs.wrapThunderbird thunderbird-bin-unwrapped {
                 applicationName = "thunderbird";
